@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta name="google-site-verification" content="lBtJ4HWafO93eVpkXwbsq2NJ0b_jE8BRJ3QHs9HFy_M" />
+<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Ultimate Cyber Toolbox</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #14080C; --neon-blue: #FFB6C1; --neon-purple: #FF69B4;
+            --glass-bg: rgba(26, 11, 18, 0.6); --glass-border: rgba(255, 182, 193, 0.3);
+            --glass-shadow: 0 4px 20px rgba(0,0,0,0.4); --glow: 0 0 10px var(--neon-blue), 0 0 20px var(--neon-purple);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent;}
+        body { background-color: var(--bg-color); color: #FFF; min-height: 100vh; overflow-x: hidden; position: relative; }
+        body::before { content: ''; position: fixed; width: 300px; height: 300px; background: var(--neon-purple); filter: blur(120px); border-radius: 50%; top: -50px; left: -100px; z-index: -1; opacity: 0.6; }
+        body::after { content: ''; position: fixed; width: 250px; height: 250px; background: var(--neon-blue); filter: blur(120px); border-radius: 50%; bottom: -50px; right: -50px; z-index: -1; opacity: 0.5; }
+        header { padding: 30px 20px 20px; text-align: center; }
+        .title-glow { font-size: 2rem; font-weight: 800; background: linear-gradient(90deg, var(--neon-blue), var(--neon-purple)); -webkit-background-clip: text; color: transparent; text-shadow: 0 0 8px rgba(0, 230, 255, 0.4); margin-bottom: 20px; }
+        .search-container { position: relative; max-width: 90%; margin: auto; }
+        .search-container i { position: absolute; left: 15px; top: 12px; color: var(--neon-blue); }
+        .glass-input { width: 100%; padding: 12px 12px 12px 40px; background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 20px; color: #FFF; outline: none; backdrop-filter: blur(10px); transition: all 0.3s; }
+        .glass-input:focus { border-color: var(--neon-purple); box-shadow: 0 0 10px rgba(157,0,255,0.4); }
+        #tools-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 15px; padding: 20px; max-width: 800px; margin: auto; }
+        .tool-card { background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 15px; padding: 20px 10px; text-align: center; cursor: pointer; transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s; box-shadow: var(--glass-shadow); backdrop-filter: blur(5px); display: flex; flex-direction: column; align-items: center; gap: 10px; }
+        .tool-card:hover { transform: scale(1.05) translateY(-5px); border-color: var(--neon-blue); box-shadow: 0 10px 25px rgba(157, 0, 255, 0.3), inset 0 0 15px rgba(0, 230, 255, 0.1); }
+        .tool-card i { font-size: 1.8rem; color: var(--neon-blue); transition: text-shadow 0.3s;}
+        .tool-card:hover i { text-shadow: var(--glow); color: #fff;}
+        .tool-card span { font-size: 0.85rem; font-weight: 600; color: #ddd; line-height: 1.2;}
+        #modal { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.7); backdrop-filter: blur(8px); z-index: 1000; display: none; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.3s ease; padding:20px; }
+        #modal.active { display: flex; opacity: 1; }
+        .modal-content { background: rgba(18, 18, 25, 0.85); width: 100%; max-width: 400px; padding: 25px; border-radius: 20px; border: 1px solid var(--neon-purple); box-shadow: var(--glow); position: relative; max-height: 90vh; overflow-y: auto; transform: scale(0.8); transition: transform 0.3s ease; }
+        #modal.active .modal-content { transform: scale(1); }
+        .close-btn { position: absolute; right: 20px; top: 15px; font-size: 1.5rem; color: #ff3c3c; cursor: pointer; }
+        .modal-title { font-size: 1.4rem; color: #fff; margin-bottom: 20px; text-shadow: 0 0 5px var(--neon-purple); border-bottom:1px solid #333; padding-bottom:10px; }
+        .generic-form { display: flex; flex-direction: column; gap: 15px; }
+        .btn-neon { padding: 12px; border-radius: 12px; background: linear-gradient(45deg, var(--neon-blue), var(--neon-purple)); border: none; color: #fff; font-weight: 600; font-size: 1rem; cursor: pointer; transition: transform 0.2s; text-shadow: 1px 1px 2px rgba(0,0,0,0.5); box-shadow: 0 5px 15px rgba(157,0,255,0.3); }
+        .btn-neon:hover { transform: scale(1.03); box-shadow: 0 5px 25px rgba(0, 230, 255, 0.6); }
+        .result-box { min-height: 50px; background: rgba(0, 0, 0, 0.5); border: 1px solid var(--glass-border); border-radius: 12px; padding: 15px; font-size: 1.1rem; color: var(--neon-blue); text-align: center; }
+        textarea.glass-input { resize: vertical; min-height: 100px; padding-left: 15px; }
+        select.glass-input { appearance: none; cursor: pointer; }
+        #flashlight-overlay, #pixel-test-overlay { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 9999; }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="title-glow">CYBER TOOLBOX</div>
+        <div class="search-container">
+            <i class="fas fa-search"></i>
+            <input type="text" id="searchInput" class="glass-input" placeholder="Search 50 tools..." onkeyup="filterTools()">
+        </div>
+    </header>
+    <main id="tools-grid"></main>
+    <div id="modal" onclick="closeModal(event)">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <i class="fas fa-times close-btn" onclick="closeModal({target: this})"></i>
+            <h2 id="m-title" class="modal-title"></h2>
+            <div id="m-body"></div>
+        </div>
+    </div>
+    <div id="flashlight-overlay" onclick="this.style.display='none'"></div>
+    <div id="pixel-test-overlay" onclick="pixelTestNext()"></div>
+
+    <script>
+        const UIGenerators = {
+            input: (id, holder, type="text") => `<input type="${type}" id="${id}" class="glass-input" placeholder="${holder}">`,
+            textarea: (id, holder) => `<textarea id="${id}" class="glass-input" placeholder="${holder}"></textarea>`,
+            btn: (text, action) => `<button class="btn-neon" onclick="${action}">${text}</button>`,
+            res: (id) => `<div id="${id}" class="result-box">Ready</div>`,
+            select: (id, opts) => `<select id="${id}" class="glass-input">${opts.map(o => `<option value="${o.val}">${o.txt}</option>`).join('')}</select>`,
+            ioLayout: (title, inpID, actFunc, outID) => `<div class="generic-form">${UIGenerators.input(inpID, 'Enter Value')} ${UIGenerators.btn(title, actFunc)} ${UIGenerators.res(outID)}</div>`,
+            twoInputs: (pl1, pl2, title, func) => `<div class="generic-form">${UIGenerators.input('i1', pl1, 'number')}${UIGenerators.input('i2', pl2, 'number')} ${UIGenerators.btn(title, func)}${UIGenerators.res('ro')}</div>`,
+            convTemplate: (baseTitle, func) => `<div class="generic-form">${UIGenerators.input('i1', 'Amount', 'number')}${UIGenerators.btn('Convert ' + baseTitle, func)}${UIGenerators.res('ro')}</div>`
+        };
+        const q = (sel) => document.querySelector(sel);
+        const gV = (id) => parseFloat(document.getElementById(id)?.value) || 0;
+        const sV = (id, txt) => { const el=document.getElementById(id); if(el) el.innerHTML = txt; }
+        const gS = (id) => document.getElementById(id)?.value || "";
+        let intervals = [];
+        const clearTimers = () => { intervals.forEach(clearInterval); intervals = []; };
+        const regInterval = (func, ms) => { const x=setInterval(func,ms); intervals.push(x); return x; };
+        const createConvObj = (dict) => Object.entries(dict).map(k=> `<option value="${k[1]}">${k[0]}</option>`).join('');
+        const handleConv = (sel1, sel2, v) => (v / document.getElementById(sel1).value * document.getElementById(sel2).value).toFixed(4);
+
+        const toolsData = [
+            { cat:"Daily", n:"Notepad", i:"fa-solid fa-clipboard", html: UIGenerators.textarea('n-t','Write here...'), init: () => { q('#n-t').value = localStorage.np||''; q('#n-t').onkeyup = (e)=>localStorage.np=e.target.value;} },
+            { cat:"Daily", n:"To-Do List", i:"fa-solid fa-list-check", html: `<div class="generic-form"><div style="display:flex;gap:10px">${UIGenerators.input('tdi','New task')}<button class="btn-neon" onclick="addTodo()">+</button></div><ul id="tdul" style="color:#FFF; list-style-position: inside;"></ul></div>`, init: () => { window.addTodo=()=> {if(gS('tdi')){ q('#tdul').innerHTML+=`<li>${gS('tdi')}</li>`; localStorage.tdl=q('#tdul').innerHTML; q('#tdi').value='';}}; if(localStorage.tdl) q('#tdul').innerHTML=localStorage.tdl; } },
+            { cat:"Daily", n:"Reminder", i:"fa-solid fa-bell", html: UIGenerators.input('rm1', 'Task') + '<br>' + UIGenerators.input('rm2', 'Seconds','number') + '<br>' + UIGenerators.btn('Set', 'startRem()') + UIGenerators.res('ro'), init: () => { window.startRem=()=> { let ms=gV('rm2'); setTimeout(()=>alert(`⏰ REMINDER: ${gS('rm1')}`), ms*1000); sV('ro', `Active in ${ms}s.`);}} },
+            { cat:"Daily", n:"Stopwatch", i:"fa-solid fa-stopwatch", html: UIGenerators.res('swv')+'<div class="generic-form">'+UIGenerators.btn('Start/Stop', 'swToggle()')+UIGenerators.btn('Reset','swR()')+'</div>', init: () => { let swT=0,r=0; sV('swv','0.0s'); window.swToggle=()=>{if(r) clearInterval(r),r=0; else r=regInterval(()=>{swT+=1; sV('swv',(swT/10).toFixed(1)+'s')},100)}; window.swR=()=> {swT=0; sV('swv','0.0s')} } },
+            { cat:"Daily", n:"Timer", i:"fa-solid fa-hourglass-end", html: UIGenerators.input('tmr', 'Seconds','number') + '<br>'+ UIGenerators.btn('Start', 'tmrSt()') + UIGenerators.res('ro'), init: () => { window.tmrSt=()=>{let left=gV('tmr'); if(left<=0)return; clearInterval(window.cx); window.cx=regInterval(()=>{left--; sV('ro', left+'s left'); if(left<=0) {clearInterval(window.cx); alert('Time up!')}},1000)}; intervals.push(window.cx)} },
+            { cat:"Daily", n:"Alarm", i:"fa-solid fa-clock", html: UIGenerators.input('alr','HH:MM (e.g. 14:30)','time') + '<br>' + UIGenerators.btn('Set Alarm','setAlm()')+ UIGenerators.res('ro'), init: () => { window.setAlm=()=> { sV('ro','Alarm Set!'); regInterval(()=>{ let d=new Date(); let cm=d.getHours().toString().padStart(2,'0')+':'+d.getMinutes().toString().padStart(2,'0'); if(gS('alr')===cm){sV('ro','WAKE UP!'); alert('WAKE UP!'); clearTimers();}},10000)} } },
+            { cat:"Daily", n:"Flashlight", i:"fa-solid fa-lightbulb", html: "Activate screen mode (Tap to exit).", init: () => { const f = q('#flashlight-overlay'); f.style.display="block"; f.style.backgroundColor="#FFF"; document.body.requestFullscreen().catch(e=>e); } },
+            { cat:"Daily", n:"Calendar", i:"fa-solid fa-calendar", html: `<div id="calb" style="background:var(--glass-bg); padding:10px; border-radius:10px;"></div>`, init: () => { let d=new Date(); sV('calb', `Date: <br><strong style="font-size:1.5rem">${d.toDateString()}</strong>`); } },
+            { cat:"Daily", n:"World Clock", i:"fa-solid fa-earth-americas", html: `<ul id="wcr" class="generic-form" style="list-style:none"></ul>`, init: () => { const lc = (z) => new Intl.DateTimeFormat('en',{timeZone:z,timeStyle:'medium'}).format(new Date()); regInterval(()=>{sV('wcr',`<li>NY: ${lc('America/New_York')}</li><li>LND: ${lc('Europe/London')}</li><li>TYO: ${lc('Asia/Tokyo')}</li>`)},1000); } },
+            { cat:"Math", n:"Calc", i:"fa-solid fa-calculator", html: `<div class="generic-form"><input class="glass-input" id="cre" readonly><div style="display:grid;grid-template-columns:repeat(4,1fr);gap:5px;">${"789/456*123-.0=+".split('').map(k=>`<button class="btn-neon" onclick="${k==='='? 'document.getElementById(`cre`).value=eval(document.getElementById(`cre`).value)' : `document.getElementById('cre').value+='${k}'` }">${k}</button>`).join('')}</div><button class="btn-neon" onclick="q('#cre').value=''">C</button></div>` },
+            { cat:"Math", n:"Sci Calc", i:"fa-solid fa-square-root-variable", html: UIGenerators.input('sv','Math func (e.g. Math.sin(0))')+'<br>'+UIGenerators.btn('Eval JS Math','sV(`ro`, eval(gS(`sv`)))')+UIGenerators.res('ro') },
+            { cat:"Math", n:"Age Calc", i:"fa-solid fa-cake-candles", html: UIGenerators.input('dby','Birth Year','number')+'<br>'+UIGenerators.btn('Calc','sV(`ro`,(new Date().getFullYear() - gV(`dby`)) + ` years`)') + UIGenerators.res('ro') },
+            { cat:"Math", n:"BMI Calc", i:"fa-solid fa-child-reaching", html: UIGenerators.twoInputs('Height (cm)','Weight (kg)','Get BMI','sV(`ro`, (gV(`i2`)/Math.pow(gV(`i1`)/100,2)).toFixed(2))') },
+            { cat:"Math", n:"EMI Calc", i:"fa-solid fa-house", html: UIGenerators.twoInputs('Loan','Months','Calc Base','sV(`ro`, (gV(`i1`)/gV(`i2`)*1.08).toFixed(2))') },
+            { cat:"Math", n:"Discount", i:"fa-solid fa-percent", html: UIGenerators.twoInputs('Price', 'Discount %', 'Final Price', 'sV(`ro`,(gV(`i1`)-gV(`i1`)*gV(`i2`)/100).toFixed(2))') },
+            { cat:"Math", n:"Tip Split", i:"fa-solid fa-coins", html: `<div class="generic-form">${UIGenerators.input('i1','Bill $','number')}${UIGenerators.input('i2','Tip %','number')}${UIGenerators.input('i3','People','number')} ${UIGenerators.btn('Split','sV(`ro`,`$`+ (gV(`i1`)*(1+gV(`i2`)/100)/gV(`i3`)).toFixed(2))')}${UIGenerators.res('ro')}</div>`},
+            { cat:"Math", n:"GST / Tax", i:"fa-solid fa-file-invoice-dollar", html: UIGenerators.twoInputs('Base','GST Rate %','Calc Total','sV(`ro`, (gV(`i1`) + gV(`i1`)*gV(`i2`)/100).toFixed(2))') },
+            { cat:"Math", n:"Percent", i:"fa-solid fa-divide", html: UIGenerators.twoInputs('X% of ...','Y Base...','Calc','sV(`ro`, (gV(`i2`)*gV(`i1`)/100).toFixed(2))') },
+            { cat:"Math", n:"Sq Root", i:"fa-solid fa-check", html: UIGenerators.ioLayout('Root','srI', 'sV(`ro`, Math.sqrt(gV(`srI`)))','ro') },
+            { cat:"Conv", n:"Length", i:"fa-solid fa-ruler", html: `<div class="generic-form"><select id="cs1" class="glass-input">${createConvObj({'Meter':1,'KM':0.001,'CM':100,'MM':1000,'Inch':39.37,'Feet':3.2808})}</select> <select id="cs2" class="glass-input">${createConvObj({'Meter':1,'KM':0.001,'CM':100,'MM':1000,'Inch':39.37,'Feet':3.2808})}</select> ${UIGenerators.convTemplate('Length', 'sV(`ro`,handleConv(`cs1`,`cs2`,gV(`i1`)))')} </div>` },
+            { cat:"Conv", n:"Weight", i:"fa-solid fa-weight-scale", html: `<div class="generic-form"><select id="cs1" class="glass-input">${createConvObj({'KG':1,'Gram':1000,'Lbs':2.2046,'Oz':35.274})}</select> <select id="cs2" class="glass-input">${createConvObj({'KG':1,'Gram':1000,'Lbs':2.2046,'Oz':35.274})}</select> ${UIGenerators.convTemplate('Weight', 'sV(`ro`,handleConv(`cs1`,`cs2`,gV(`i1`)))')} </div>` },
+            { cat:"Conv", n:"Temp", i:"fa-solid fa-temperature-half", html: UIGenerators.ioLayout('C to F','ti', 'sV(`ro`, (gV(`ti`)*9/5+32).toFixed(1)+` °F`)','ro') },
+            { cat:"Conv", n:"Area", i:"fa-solid fa-layer-group", html: `<div class="generic-form"><select id="cs1" class="glass-input">${createConvObj({'Sq M':1,'Sq Km':0.000001,'Sq Ft':10.764,'Acre':0.000247})}</select> <select id="cs2" class="glass-input">${createConvObj({'Sq M':1,'Sq Km':0.000001,'Sq Ft':10.764,'Acre':0.000247})}</select> ${UIGenerators.convTemplate('Area', 'sV(`ro`,handleConv(`cs1`,`cs2`,gV(`i1`)))')} </div>` },
+            { cat:"Conv", n:"Speed", i:"fa-solid fa-gauge", html: `<div class="generic-form"><select id="cs1" class="glass-input">${createConvObj({'M/s':1,'Km/h':3.6,'MPH':2.23694})}</select> <select id="cs2" class="glass-input">${createConvObj({'M/s':1,'Km/h':3.6,'MPH':2.23694})}</select> ${UIGenerators.convTemplate('Speed', 'sV(`ro`,handleConv(`cs1`,`cs2`,gV(`i1`)))')} </div>` },
+            { cat:"Conv", n:"Volume", i:"fa-solid fa-flask", html: `<div class="generic-form"><select id="cs1" class="glass-input">${createConvObj({'Liter':1,'ML':1000,'US Gal':0.264172})}</select> <select id="cs2" class="glass-input">${createConvObj({'Liter':1,'ML':1000,'US Gal':0.264172})}</select> ${UIGenerators.convTemplate('Volume', 'sV(`ro`,handleConv(`cs1`,`cs2`,gV(`i1`)))')} </div>` },
+            { cat:"Conv", n:"Data", i:"fa-solid fa-hard-drive", html: `<div class="generic-form"><select id="cs1" class="glass-input">${createConvObj({'Bytes':1,'KB':1e-3,'MB':1e-6,'GB':1e-9})}</select> <select id="cs2" class="glass-input">${createConvObj({'Bytes':1,'KB':1e-3,'MB':1e-6,'GB':1e-9})}</select> ${UIGenerators.convTemplate('Data', 'sV(`ro`,handleConv(`cs1`,`cs2`,gV(`i1`)))')} </div>` },
+            { cat:"Conv", n:"Currency", i:"fa-solid fa-dollar-sign", html: `<div class="generic-form"><select id="cs1" class="glass-input">${createConvObj({'USD':1,'EUR':0.93,'GBP':0.79,'JPY':150.5,'INR':83.0})}</select> <select id="cs2" class="glass-input">${createConvObj({'USD':1,'EUR':0.93,'GBP':0.79,'JPY':150.5,'INR':83.0})}</select> ${UIGenerators.convTemplate('Approx Value', 'sV(`ro`,handleConv(`cs1`,`cs2`,gV(`i1`)))')} </div>` },
+            { cat:"Conv", n:"Time", i:"fa-solid fa-hourglass", html: `<div class="generic-form"><select id="cs1" class="glass-input">${createConvObj({'Secs':1,'Mins':1/60,'Hours':1/3600,'Days':1/86400})}</select> <select id="cs2" class="glass-input">${createConvObj({'Secs':1,'Mins':1/60,'Hours':1/3600,'Days':1/86400})}</select> ${UIGenerators.convTemplate('Time', 'sV(`ro`,handleConv(`cs1`,`cs2`,gV(`i1`)))')} </div>` },
+            { cat:"Dev", n:"TTS", i:"fa-solid fa-comment-dots", html: UIGenerators.textarea('tt1','Type phrase...')+'<br>'+UIGenerators.btn('Speak!','speechSynthesis.speak(new SpeechSynthesisUtterance(gS(`tt1`)))')},
+            { cat:"Dev", n:"STT", i:"fa-solid fa-microphone", html: UIGenerators.btn('Tap Mic','startSTT()')+UIGenerators.res('ro'), init: () => { window.startSTT=()=>{ let r = new (window.SpeechRecognition || window.webkitSpeechRecognition)(); r.onresult=e=>sV('ro',e.results[0][0].transcript); r.start();} } },
+            { cat:"Dev", n:"Pass Gen", i:"fa-solid fa-key", html: UIGenerators.btn('Gen Strong Pass', `sV('ro', Array.from(crypto.getRandomValues(new Uint32Array(16))).map(x=>'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*'[(x%70)]).join(''))`)+UIGenerators.res('ro')},
+                                    { cat:"Dev", n:"QR Gen", i:"fa-solid fa-qrcode", html: UIGenerators.input('qrd','Enter URL')+'<br>'+UIGenerators.btn('Generate','makeQR()')+'<div id="xro" style="text-align:center; padding:15px; background:#fff; border-radius:10px; margin-top:10px; color:#000;">...</div>', init: () => { window.makeQR = () => { q('#xro').innerHTML = `<img width="200" src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(gS('qrd'))}">`; } } },
+                                    
+                        
+            { cat:"Dev", n:"Morse", i:"fa-solid fa-tower-broadcast", html: UIGenerators.input('mc1','Text')+'<br>'+UIGenerators.btn('Map Code','window.tmorse()')+UIGenerators.res('ro'), init: ()=>{ window.tmorse=()=>{ let m={"a":".-","b":"-...","c":"-.-.","d":"-..","e":".","f":"..-.","g":"--.","h":"....","i":"..","j":".---","k":"-.-","l":".-..","m":"--","n":"-.","o":"---","p":".--.","q":"--.-","r":".-.","s":"...","t":"-","u":"..-","v":"...-","w":".--","x":"-..-","y":"-.--","z":"--.."}; sV('ro', gS('mc1').toLowerCase().split('').map(x=>m[x]||x).join(' '))} } },
+            { cat:"Dev", n:"Word Count", i:"fa-solid fa-file-word", html: UIGenerators.textarea('wc1','Type here')+'<br>'+UIGenerators.btn('Count','sV(`ro`,`Words: `+ (gS(`wc1`).trim().split(/\\s+/).length) + ` | Chars: ` + gS(`wc1`).length)')+UIGenerators.res('ro') },
+            { cat:"Dev", n:"Case Conv", i:"fa-solid fa-a", html: UIGenerators.textarea('cx1','String...')+'<br>'+UIGenerators.btn('UPPER','sV(`ro`,gS(`cx1`).toUpperCase())')+UIGenerators.btn('LOWER','sV(`ro`,gS(`cx1`).toLowerCase())')+UIGenerators.res('ro')},
+                        { cat:"Dev", n:"Base64", i:"fa-solid fa-code-commit", html: UIGenerators.input('be','Text')+'<br>'+UIGenerators.btn('Encode','sV(`ro`,btoa(gS(`be`)))')+UIGenerators.btn('Decode','sV(`ro`,atob(gS(`be`)))')+UIGenerators.res('ro') },
+            { cat:"Dev", n:"Binary", i:"fa-solid fa-binary", html: UIGenerators.input('bcx','Text')+'<br>'+UIGenerators.btn('To Binary', 'sV(`ro`, gS(`bcx`).split(``).map(c=>c.charCodeAt(0).toString(2).padStart(8,`0`)).join(` `))') + UIGenerators.res('ro') },
+            { cat:"Media", n:"Img Resize", i:"fa-solid fa-image", html: `<div class="generic-form"><input type="file" id="fim" accept="image/*" class="glass-input"> ${UIGenerators.input('iwid', 'Width', 'number')} ${UIGenerators.btn('Resize (RClick Save)', 'irun()')}<canvas id="x-cvs" style="max-width:100%; border:1px solid #fff;"></canvas></div>`, init: ()=>{ window.irun=()=>{let img=new Image(); let c=q('#x-cvs'); img.src=URL.createObjectURL(q('#fim').files[0]); img.onload=()=>{c.width=gV('iwid')||300; c.height=(c.width*img.height)/img.width; c.getContext('2d').drawImage(img,0,0,c.width,c.height)};} } },
+            { cat:"Media", n:"Color Pick", i:"fa-solid fa-palette", html: `<input type="color" id="clpk" value="#00E6FF" style="width:100%; height:100px;"> <br> ${UIGenerators.btn('Get Value','sV(`ro`, `Hex: ` + q(`#clpk`).value)')} ${UIGenerators.res('ro')}`},
+            { cat:"Media", n:"Whiteboard", i:"fa-solid fa-chalkboard", html: `<canvas id="wbcvs" width="300" height="250" style="border:1px solid var(--neon-blue);touch-action:none;background:#000"></canvas><br>${UIGenerators.btn('Clear','q(`#wbcvs`).getContext(`2d`).clearRect(0,0,300,250)')}`, init: ()=>{let d=false,c=q('#wbcvs').getContext('2d'); q('#wbcvs').onpointerdown=e=>{d=true;c.beginPath()}; q('#wbcvs').onpointerup=()=>d=false; q('#wbcvs').onpointermove=e=>{if(d){c.strokeStyle='#00e6ff'; c.lineTo(e.offsetX,e.offsetY); c.stroke()}} } },
+            { cat:"Media", n:"PX > REM", i:"fa-solid fa-arrows-alt-v", html: UIGenerators.ioLayout('Convert', 'uxp', 'sV(`ro`, (gV(`uxp`)/16).toFixed(4) + ` rem`)', 'ro')},
+            { cat:"Media", n:"Flip Coin", i:"fa-solid fa-circle-notch", html: `<h1 id="cfv" style="font-size:3rem;text-align:center;padding:20px;">🪙</h1> ${UIGenerators.btn('Flip','q(`#cfv`).innerText = Math.random()>0.5?`🪙 HEADS`:`🪙 TAILS`')}`},
+            { cat:"Media", n:"Roll Dice", i:"fa-solid fa-dice-five", html: `<h1 id="rdv" style="font-size:3rem;text-align:center;padding:20px;">🎲</h1> ${UIGenerators.btn('Roll','q(`#rdv`).innerText = `🎲 Result: `+ Math.ceil(Math.random()*6)')}`},
+            { cat:"Smart", n:"Step Count", i:"fa-solid fa-shoe-prints", html: `<div style="text-align:center">Tap here<br><br><h1>👞 <span id="stpc">0</span> steps</h1></div> ${UIGenerators.btn('Mock Loop', 'rMokSteps()')}`, init: ()=>{ window.scv=0; window.rMokSteps=()=>regInterval(()=>{sV('stpc', ++window.scv)},500); } },
+            { cat:"Smart", n:"Level", i:"fa-solid fa-compass-drafting", html: `Tilt device <br><br> ${UIGenerators.res('orx')}`, init: ()=>{ window.addEventListener('deviceorientation',(e)=> { sV('orx', `Beta: ${e.beta?.toFixed(2)||0}° <br> Gamma: ${e.gamma?.toFixed(2)||0}°`)}) } },
+            { cat:"Smart", n:"Decibel", i:"fa-solid fa-ear-listen", html: UIGenerators.btn('Mic','dbR()')+'<br><div id="rxcv" style="height:20px; background:#111"><div id="filv" style="background:#00E6FF; height:100%; width:0%"></div></div>'+UIGenerators.res('ro'), init: ()=>{window.dbR=()=>{navigator.mediaDevices.getUserMedia({audio:true}).then(s=>{const c=new AudioContext(); const a=c.createAnalyser(); c.createMediaStreamSource(s).connect(a); a.fftSize=256; const b=new Uint8Array(a.frequencyBinCount); regInterval(()=>{a.getByteFrequencyData(b); let ag=b.reduce((z,x)=>z+x,0)/b.length; q('#filv').style.width=ag/1.2+'%'; sV('ro','Amplitude: '+Math.floor(ag));},100)})}} },
+            { cat:"Smart", n:"Vibrate", i:"fa-solid fa-mobile", html: `<div style="padding:10px;">${UIGenerators.btn('Fast','navigator.vibrate(100)')}<br><br>${UIGenerators.btn('SOS','navigator.vibrate([1000,500,1000])')}</div>`},
+            { cat:"Smart", n:"Screen Test", i:"fa-solid fa-display", html: `Tap on loop. <br><br> ${UIGenerators.btn('Start','runPxT()')}`, init: ()=>{ window.pCol=["#000","#FFF","#F00","#0F0","#00F"]; window.ci=0; window.runPxT=()=>{ let x=q('#pixel-test-overlay'); x.style.display="block"; document.body.requestFullscreen().catch(e=>e); window.pixelTestNext()}; window.pixelTestNext=()=> { let x=q('#pixel-test-overlay'); x.style.backgroundColor=window.pCol[window.ci]; window.ci++; if(window.ci>window.pCol.length){window.ci=0;x.style.display="none";} } } },
+            { cat:"Smart", n:"Date Dist", i:"fa-solid fa-calendar-days", html: UIGenerators.input('d1c','Start','date')+UIGenerators.input('d2c','End','date')+'<br>'+UIGenerators.btn('Days Between', 'sV(`ro`,Math.abs((new Date(gS(`d2c`))-new Date(gS(`d1c`)))/86400000)+` Days Difference`)')+UIGenerators.res('ro') },
+            { cat:"Smart", n:"Zodiac", i:"fa-solid fa-star-and-crescent", html: UIGenerators.input('zdm', 'Month (1-12)', 'number')+UIGenerators.input('zdd', 'Day', 'number')+'<br>'+UIGenerators.btn('Reveal', 'rZodiac()')+UIGenerators.res('ro'), init: ()=>{ window.rZodiac=()=>{ let m=gV('zdm'), d=gV('zdd'), o; if((m==3&&d>=21)||(m==4&&d<=19)) o="Aries ♈"; else if((m==4&&d>=20)||(m==5&&d<=20)) o="Taurus ♉"; else o="Valid match required"; sV('ro', o); } } }
+        ];
+
+        const initGrid = () => {
+            const wrap = document.getElementById('tools-grid');
+            wrap.innerHTML = '';
+            toolsData.forEach((td, idx) => {
+                let d = document.createElement('div');
+                d.className = 'tool-card'; d.setAttribute('data-search', td.n.toLowerCase());
+                d.onclick = () => renderModal(idx);
+                d.innerHTML = `<i class="${td.i}"></i> <span>${td.n}</span>`;
+                wrap.appendChild(d);
+            });
+        }
+        const renderModal = (idx) => {
+            const data = toolsData[idx];
+            document.getElementById('m-title').innerHTML = `<i class="${data.i}"></i> ` + data.n;
+            document.getElementById('m-body').innerHTML = data.html;
+            document.getElementById('modal').classList.add('active');
+            if (data.init) setTimeout(data.init, 50);
+        }
+        const closeModal = (e) => {
+            if(e.target === document.getElementById('modal') || e.target.classList.contains('close-btn')) {
+                document.getElementById('modal').classList.remove('active');
+                clearTimers();
+            }
+        }
+        const filterTools = () => {
+            const s = document.getElementById('searchInput').value.toLowerCase();
+            document.querySelectorAll('.tool-card').forEach(n => {
+                n.style.display = n.getAttribute('data-search').includes(s) ? 'flex' : 'none';
+            });
+        }
+        window.onload = initGrid;
+    </script>
+</body>
+</html>
