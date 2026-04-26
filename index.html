@@ -1,10 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>Neon Tool Kit - All-in-One Useful Web Tools</title>
-<meta name="description" content="Access the Neon Tool Kit for a collection of fast, reliable, and easy-to-use digital tools designed to simplify your daily tasks.">
-<meta name="keywords" content="Neon Tool Kit, online tools, web utility, digital toolkit, productivity tools">
-<meta name="author" content="Sohaib Ahmad">
+<meta name="google-site-verification" content="lBtJ4HWafO93eVpkXwbsq2NJ0b_jE8BRJ3QHs9HFy_M" />
+<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Neon Tool Kit - All-in-One Useful Web Tools</title>
+    <meta name="description" content="Access the Neon Tool Kit for a collection of fast, reliable, and easy-to-use digital tools designed to simplify your daily tasks.">
+    <meta name="keywords" content="Neon Tool Kit, online tools, web utility, digital toolkit, productivity tools">
+    <meta name="author" content="Sohaib Ahmad">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
@@ -46,7 +49,7 @@
 </head>
 <body>
     <header>
-        <div class="title-glow">CYBER TOOLBOX</div>
+        <div class="title-glow">NEON TOOL KIT</div>
         <div class="search-container">
             <i class="fas fa-search"></i>
             <input type="text" id="searchInput" class="glass-input" placeholder="Search 50 tools..." onkeyup="filterTools()">
@@ -116,13 +119,11 @@
             { cat:"Dev", n:"TTS", i:"fa-solid fa-comment-dots", html: UIGenerators.textarea('tt1','Type phrase...')+'<br>'+UIGenerators.btn('Speak!','speechSynthesis.speak(new SpeechSynthesisUtterance(gS(`tt1`)))')},
             { cat:"Dev", n:"STT", i:"fa-solid fa-microphone", html: UIGenerators.btn('Tap Mic','startSTT()')+UIGenerators.res('ro'), init: () => { window.startSTT=()=>{ let r = new (window.SpeechRecognition || window.webkitSpeechRecognition)(); r.onresult=e=>sV('ro',e.results[0][0].transcript); r.start();} } },
             { cat:"Dev", n:"Pass Gen", i:"fa-solid fa-key", html: UIGenerators.btn('Gen Strong Pass', `sV('ro', Array.from(crypto.getRandomValues(new Uint32Array(16))).map(x=>'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*'[(x%70)]).join(''))`)+UIGenerators.res('ro')},
-                                    { cat:"Dev", n:"QR Gen", i:"fa-solid fa-qrcode", html: UIGenerators.input('qrd','Enter URL')+'<br>'+UIGenerators.btn('Generate','makeQR()')+'<div id="xro" style="text-align:center; padding:15px; background:#fff; border-radius:10px; margin-top:10px; color:#000;">...</div>', init: () => { window.makeQR = () => { q('#xro').innerHTML = `<img width="200" src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(gS('qrd'))}">`; } } },
-                                    
-                        
+            { cat:"Dev", n:"QR Gen", i:"fa-solid fa-qrcode", html: UIGenerators.input('qrd','Enter URL')+'<br>'+UIGenerators.btn('Generate','makeQR()')+'<div id="xro" style="text-align:center; padding:15px; background:#fff; border-radius:10px; margin-top:10px; color:#000;">...</div>', init: () => { window.makeQR = () => { q('#xro').innerHTML = `<img width="200" src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(gS('qrd'))}">`; } } },
             { cat:"Dev", n:"Morse", i:"fa-solid fa-tower-broadcast", html: UIGenerators.input('mc1','Text')+'<br>'+UIGenerators.btn('Map Code','window.tmorse()')+UIGenerators.res('ro'), init: ()=>{ window.tmorse=()=>{ let m={"a":".-","b":"-...","c":"-.-.","d":"-..","e":".","f":"..-.","g":"--.","h":"....","i":"..","j":".---","k":"-.-","l":".-..","m":"--","n":"-.","o":"---","p":".--.","q":"--.-","r":".-.","s":"...","t":"-","u":"..-","v":"...-","w":".--","x":"-..-","y":"-.--","z":"--.."}; sV('ro', gS('mc1').toLowerCase().split('').map(x=>m[x]||x).join(' '))} } },
-            { cat:"Dev", n:"Word Count", i:"fa-solid fa-file-word", html: UIGenerators.textarea('wc1','Type here')+'<br>'+UIGenerators.btn('Count','sV(`ro`,`Words: `+ (gS(`wc1`).trim().split(/\\s+/).length) + ` | Chars: ` + gS(`wc1`).length)')+UIGenerators.res('ro') },
+                        { cat:"Dev", n:"Word Count", i:"fa-solid fa-file-word", html: UIGenerators.textarea('wc1','Type here')+'<br>'+UIGenerators.btn('Count','sV(`ro`,`Words: `+ (gS(`wc1`).trim().split(/\\s+/).length) + ` | Chars: ` + gS(`wc1`).length)')+UIGenerators.res('ro') },
             { cat:"Dev", n:"Case Conv", i:"fa-solid fa-a", html: UIGenerators.textarea('cx1','String...')+'<br>'+UIGenerators.btn('UPPER','sV(`ro`,gS(`cx1`).toUpperCase())')+UIGenerators.btn('LOWER','sV(`ro`,gS(`cx1`).toLowerCase())')+UIGenerators.res('ro')},
-                        { cat:"Dev", n:"Base64", i:"fa-solid fa-code-commit", html: UIGenerators.input('be','Text')+'<br>'+UIGenerators.btn('Encode','sV(`ro`,btoa(gS(`be`)))')+UIGenerators.btn('Decode','sV(`ro`,atob(gS(`be`)))')+UIGenerators.res('ro') },
+            { cat:"Dev", n:"Base64", i:"fa-solid fa-code-commit", html: UIGenerators.input('be','Text')+'<br>'+UIGenerators.btn('Encode','sV(`ro`,btoa(gS(`be`)))')+UIGenerators.btn('Decode','sV(`ro`,atob(gS(`be`)))')+UIGenerators.res('ro') },
             { cat:"Dev", n:"Binary", i:"fa-solid fa-binary", html: UIGenerators.input('bcx','Text')+'<br>'+UIGenerators.btn('To Binary', 'sV(`ro`, gS(`bcx`).split(``).map(c=>c.charCodeAt(0).toString(2).padStart(8,`0`)).join(` `))') + UIGenerators.res('ro') },
             { cat:"Media", n:"Img Resize", i:"fa-solid fa-image", html: `<div class="generic-form"><input type="file" id="fim" accept="image/*" class="glass-input"> ${UIGenerators.input('iwid', 'Width', 'number')} ${UIGenerators.btn('Resize (RClick Save)', 'irun()')}<canvas id="x-cvs" style="max-width:100%; border:1px solid #fff;"></canvas></div>`, init: ()=>{ window.irun=()=>{let img=new Image(); let c=q('#x-cvs'); img.src=URL.createObjectURL(q('#fim').files[0]); img.onload=()=>{c.width=gV('iwid')||300; c.height=(c.width*img.height)/img.width; c.getContext('2d').drawImage(img,0,0,c.width,c.height)};} } },
             { cat:"Media", n:"Color Pick", i:"fa-solid fa-palette", html: `<input type="color" id="clpk" value="#00E6FF" style="width:100%; height:100px;"> <br> ${UIGenerators.btn('Get Value','sV(`ro`, `Hex: ` + q(`#clpk`).value)')} ${UIGenerators.res('ro')}`},
